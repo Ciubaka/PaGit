@@ -14,6 +14,13 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using PaGit.Models.Startowa;
+using System;
+using System.IO;
+using static System.Net.WebRequestMethods;
+using System.Security.Cryptography;
+using System.Text;
+
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,10 +68,60 @@ namespace PaGit.Controllers
             return RedirectToAction("Files");
         }
 
+
+
         public string Files()
         {
-            return "Juz jest w folderze";
+            string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
+
+            //var names = new List<string>();
+
+            //foreach (string file in pliki)
+            //{
+            //    names.Add(file);
+
+            //}
+            //Path.GetFileName(pliki[1]);
+
+            for (int i = 0; i < pliki.Length; i++)
+            {
+
+            }
+
+            DirectoryInfo directory = new DirectoryInfo(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
+
+            string po = directory.LastAccessTime.ToString();
+
+            FileInfo F = new FileInfo(pliki[0]);
+            string zoba = pliki[0];
+            byte[] bytes = Encoding.ASCII.GetBytes(zoba);
+
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = System.IO.File.OpenRead(zoba))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+
+            //using (var md5 = MD5.Create())
+            //{
+            //    using (var stream = System.IO.File.OpenRead(zoba))
+            //    {
+            //        return Encoding.Default.GetString(md5.ComputeHash(stream));
+            //    }
+            //}
         }
+
+        //string localDirectoryUpload = @"C:\Users\User\source\repos\PaGit\PaGit\upload";
+        // string localPatternUpload = "*.*";
+        // string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
+       // string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
+        
+       
+      
+
 
         //    SftpClient client_sftp = new SftpClient("10.6.219.22", "Szymon", "qwerty");
         //    SshClient client_ssh= new SshClient("10.6.219.22", "Szymon", "qwerty");
