@@ -19,6 +19,7 @@ using System.IO;
 using static System.Net.WebRequestMethods;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 
 
 
@@ -70,7 +71,7 @@ namespace PaGit.Controllers
 
 
 
-        public string Files()
+        public List<string> Files()
         {
             string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
 
@@ -92,18 +93,55 @@ namespace PaGit.Controllers
 
             string po = directory.LastAccessTime.ToString();
 
-            FileInfo F = new FileInfo(pliki[0]);
-            string zoba = pliki[0];
-            byte[] bytes = Encoding.ASCII.GetBytes(zoba);
+           // FileInfo F = new FileInfo(pliki[0]);
+            //string zoba = pliki[0];
+            //byte[] bytes = Encoding.ASCII.GetBytes(zoba);
 
-            using (var md5 = MD5.Create())
+            List<string> shasha = new List<string>();
+            List<string> md5md5 = new List<string>();
+
+            List<string> listaPlikow = pliki.ToList();
+            
+            foreach (string plik in listaPlikow)
             {
-                using (var stream = System.IO.File.OpenRead(zoba))
+                //byte[] bytes = Encoding.ASCII.GetBytes(plik);
+
+                //sha1
+                FileStream fop = System.IO.File.OpenRead(plik);
+                shasha.Add(BitConverter.ToString(SHA1.Create().ComputeHash(fop)).Replace("-", "").ToLowerInvariant());
+
+                //md5
+                using (var md5 = MD5.Create())
                 {
-                    var hash = md5.ComputeHash(stream);
-                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                    using (var stream = System.IO.File.OpenRead(plik))
+                    {
+                        var hash = md5.ComputeHash(stream);
+                        md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+                    }
                 }
+
             }
+
+
+            //md5
+            //using (var md5 = MD5.Create())
+            //{
+            //    using (var stream = System.IO.File.OpenRead(zoba))
+            //    {
+            //        var hash = md5.ComputeHash(stream);
+            //        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            //    }
+            //}
+            //sha1
+
+            //FileStream fop = System.IO.File.OpenRead(zoba);
+            //string chksum = BitConverter.ToString(SHA1.Create().ComputeHash(fop));
+            //return chksum;
+
+
+            return md5md5; 
+
+
 
             //using (var md5 = MD5.Create())
             //{
