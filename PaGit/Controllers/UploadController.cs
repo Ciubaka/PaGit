@@ -66,80 +66,112 @@ namespace PaGit.Controllers
                 }
 
             }
-            return RedirectToAction("Files");
+            //return RedirectToAction("Files");
+            return RedirectToAction("Pliky","Ten");
         }
 
+        //public IActionResult Pliki()
+        //{
+        //    string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
+        //    List<string> shasha = new List<string>();
+        //    List<string> md5md5 = new List<string>();
+
+        //    List<string> listaPlikow = pliki.ToList();
+
+        //    //foreach (string plik in listaPlikow)
+        //    //{
+        //    //    //byte[] bytes = Encoding.ASCII.GetBytes(plik);
+
+        //    //    //sha1
+        //    //    FileStream fop = System.IO.File.OpenRead(plik);
+        //    //    shasha.Add(BitConverter.ToString(SHA1.Create().ComputeHash(fop)).Replace("-", "").ToLowerInvariant());
+
+        //    //    //md5
+        //    //    using (var md5 = MD5.Create())
+        //    //    {
+        //    //        using (var stream = System.IO.File.OpenRead(plik))
+        //    //        {
+        //    //            var hash = md5.ComputeHash(stream);
+        //    //            md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+        //    //        }
+
+        //    //        return View(shasha);
+        //    //    }
+        //    //}
+        //}
 
 
-        public List<string> Files()
-        {
-            string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
 
-            //var names = new List<string>();
 
-            //foreach (string file in pliki)
-            //{
-            //    names.Add(file);
+        //public List<string> Files()
+        //{
+        //    string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
 
-            //}
-            //Path.GetFileName(pliki[1]);
+        //    //var names = new List<string>();
 
-            for (int i = 0; i < pliki.Length; i++)
-            {
+        //    //foreach (string file in pliki)
+        //    //{
+        //    //    names.Add(file);
 
-            }
+        //    //}
+        //    //Path.GetFileName(pliki[1]);
 
-            DirectoryInfo directory = new DirectoryInfo(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
+        //    for (int i = 0; i < pliki.Length; i++)
+        //    {
 
-            string po = directory.LastAccessTime.ToString();
+        //    }
 
-           // FileInfo F = new FileInfo(pliki[0]);
-            //string zoba = pliki[0];
-            //byte[] bytes = Encoding.ASCII.GetBytes(zoba);
+        //    DirectoryInfo directory = new DirectoryInfo(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
 
-            List<string> shasha = new List<string>();
-            List<string> md5md5 = new List<string>();
+        //    string po = directory.LastAccessTime.ToString();
 
-            List<string> listaPlikow = pliki.ToList();
+        //   // FileInfo F = new FileInfo(pliki[0]);
+        //    //string zoba = pliki[0];
+        //    //byte[] bytes = Encoding.ASCII.GetBytes(zoba);
+
+        //    List<string> shasha = new List<string>();
+        //    List<string> md5md5 = new List<string>();
+
+        //    List<string> listaPlikow = pliki.ToList();
             
-            foreach (string plik in listaPlikow)
-            {
-                //byte[] bytes = Encoding.ASCII.GetBytes(plik);
+        //    foreach (string plik in listaPlikow)
+        //    {
+        //        //byte[] bytes = Encoding.ASCII.GetBytes(plik);
 
-                //sha1
-                FileStream fop = System.IO.File.OpenRead(plik);
-                shasha.Add(BitConverter.ToString(SHA1.Create().ComputeHash(fop)).Replace("-", "").ToLowerInvariant());
+        //        //sha1
+        //        FileStream fop = System.IO.File.OpenRead(plik);
+        //        shasha.Add(BitConverter.ToString(SHA1.Create().ComputeHash(fop)).Replace("-", "").ToLowerInvariant());
 
-                //md5
-                using (var md5 = MD5.Create())
-                {
-                    using (var stream = System.IO.File.OpenRead(plik))
-                    {
-                        var hash = md5.ComputeHash(stream);
-                        md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
-                    }
-                }
+        //        //md5
+        //        using (var md5 = MD5.Create())
+        //        {
+        //            using (var stream = System.IO.File.OpenRead(plik))
+        //            {
+        //                var hash = md5.ComputeHash(stream);
+        //                md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+        //            }
+        //        }
 
-            }
-
-
-            //md5
-            //using (var md5 = MD5.Create())
-            //{
-            //    using (var stream = System.IO.File.OpenRead(zoba))
-            //    {
-            //        var hash = md5.ComputeHash(stream);
-            //        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            //    }
-            //}
-            //sha1
-
-            //FileStream fop = System.IO.File.OpenRead(zoba);
-            //string chksum = BitConverter.ToString(SHA1.Create().ComputeHash(fop));
-            //return chksum;
+        //    }
 
 
-            return md5md5; 
+        //    //md5
+        //    //using (var md5 = MD5.Create())
+        //    //{
+        //    //    using (var stream = System.IO.File.OpenRead(zoba))
+        //    //    {
+        //    //        var hash = md5.ComputeHash(stream);
+        //    //        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        //    //    }
+        //    //}
+        //    //sha1
+
+        //    //FileStream fop = System.IO.File.OpenRead(zoba);
+        //    //string chksum = BitConverter.ToString(SHA1.Create().ComputeHash(fop));
+        //    //return chksum;
+
+
+        //    return md5md5; 
 
 
 
@@ -150,7 +182,7 @@ namespace PaGit.Controllers
             //        return Encoding.Default.GetString(md5.ComputeHash(stream));
             //    }
             //}
-        }
+       // }
 
         //string localDirectoryUpload = @"C:\Users\User\source\repos\PaGit\PaGit\upload";
         // string localPatternUpload = "*.*";
