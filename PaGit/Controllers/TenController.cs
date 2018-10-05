@@ -22,6 +22,22 @@ namespace PaGit.Controllers
         public IActionResult Pliky()
         {
             string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
+
+            var dir = new DirectoryInfo(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
+            FileInfo[] files = dir.GetFiles();
+
+            foreach(FileInfo file in files)
+            {
+                string nazwa = file.Name.ToString();
+                string rozszerzenie = file.Extension.ToString();
+                string rozmiar = file.Length.ToString();
+
+                string dataOstatniegoDostepu = file.LastAccessTime.ToShortDateString();
+                string dataStworzeniaPliku = file.CreationTime.ToShortDateString();
+                string dataOstatniejModyfikacji = file.LastAccessTime.ToShortDateString();
+            }
+
+
             List<string> shasha = new List<string>();
             List<string> md5md5 = new List<string>();
 
@@ -47,6 +63,15 @@ namespace PaGit.Controllers
                     
                 }
             }
+
+
+
+
+
+
+
+
+
             return View(shasha);
         }
     

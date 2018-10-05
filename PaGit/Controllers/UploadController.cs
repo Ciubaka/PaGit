@@ -70,36 +70,6 @@ namespace PaGit.Controllers
             return RedirectToAction("Pliky","Ten");
         }
 
-        //public IActionResult Pliki()
-        //{
-        //    string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
-        //    List<string> shasha = new List<string>();
-        //    List<string> md5md5 = new List<string>();
-
-        //    List<string> listaPlikow = pliki.ToList();
-
-        //    //foreach (string plik in listaPlikow)
-        //    //{
-        //    //    //byte[] bytes = Encoding.ASCII.GetBytes(plik);
-
-        //    //    //sha1
-        //    //    FileStream fop = System.IO.File.OpenRead(plik);
-        //    //    shasha.Add(BitConverter.ToString(SHA1.Create().ComputeHash(fop)).Replace("-", "").ToLowerInvariant());
-
-        //    //    //md5
-        //    //    using (var md5 = MD5.Create())
-        //    //    {
-        //    //        using (var stream = System.IO.File.OpenRead(plik))
-        //    //        {
-        //    //            var hash = md5.ComputeHash(stream);
-        //    //            md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
-        //    //        }
-
-        //    //        return View(shasha);
-        //    //    }
-        //    //}
-        //}
-
 
 
 
