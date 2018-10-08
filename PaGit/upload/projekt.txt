@@ -1,6 +1,0 @@
-A) obliczanie skrótu skanowanego pliku
-
-B) rozpoznawanie typów pliku (na podstawie zawartoœci pliku, "magicznych" bajtach itd.) - rozpoznawanie na podstawie rozszerzenia nie wchodzi w rachubê
-C)Uzyskiwanie informacji o pliku (data kompilacji itp.) 
-D)Uzyskanie informacji o sekcjach pliku wykonywalnego, importowanych bibliotekach dynamicznych oraz wykorzystywanych z nich funkcjach
-E) sk³adowanie wyników w bazie danych wyników skanowania

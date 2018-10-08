@@ -1,7 +1,0 @@
-C:\Program Files (x86)\Java\jdk1.8.0_161\bin
-
-C:\Users\User\AppData\Local\Android\Sdk
-
-Ogarnianie pendrive:
-cmd -> list disk -> select disk 1(ten na ktorym jest pendrive, wyjmij i zobacz co sie schowa) -> clean -> create partition primary -> active -> assign!!! to est najjwazniejsze
-
