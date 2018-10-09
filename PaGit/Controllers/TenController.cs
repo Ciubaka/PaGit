@@ -8,6 +8,11 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using System.Reflection;
+//using Microsoft.SqlServer.Dts.Runtime;
+using System.Runtime.InteropServices;
+using System.Reflection.Metadata;
+//using Mono.Cecil;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,24 +20,23 @@ namespace PaGit.Controllers
 {
     public class TenController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
         }
 
         //public string Pliky()
-        
-        public IActionResult Pliky()
 
+        public IActionResult Pliky()
         {
+            //pobranie dodanych plików z folderu  
             string[] pliki = Directory.GetFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.*");
 
+            //info o folderze
             var dir = new DirectoryInfo(@"C:\Users\User\source\repos\PaGit\PaGit\upload");
             FileInfo[] files = dir.GetFiles();
-
             List<string> listaPlikow = pliki.ToList();
-            
+
 
             List<string> nazwy = new List<string>();
             List<string> rozszerzenia = new List<string>();
@@ -42,12 +46,14 @@ namespace PaGit.Controllers
             List<string> datyOstatniejModyfikacji = new List<string>();
 
 
-            //var versInfo = FileVersionInfo.GetVersionInfo(files[0]);
-            ////String fileVersion = versInfo.FileVersion;
-            ////String productVersion = versInfo.ProductVersion;
+            //wersja pliku exe
+            //var versionInfo = FileVersionInfo.GetVersionInfo(pliki[0]);
+            //string versionProduct = versionInfo.ProductVersion;
+            //string versionFile = versionInfo.CompanyName;
+            //string versionBuild = versionInfo.FileBuildPart.ToString();
 
-            //ViewBag.wersja = fileVersion.ToString();
-            //ViewBag.wersja2 = productVersion.ToString();
+            //ViewBag.wersja = "Wersja produktu (exe ):" + versionProduct + "Cos: " + versionBuild;
+            //ViewBag.wersja2 = "Company name (exe) " + versionFile;
 
 
 
@@ -69,17 +75,16 @@ namespace PaGit.Controllers
             ViewBag.datyStworzeniaPliku = "Data stworzenia pliku: " + datyStworzeniaPliku.First();
             ViewBag.datyOstatniejModyfikacji = "Data ostatniej modyfikacji: " + datyOstatniejModyfikacji.First();
 
-
-
+            
 
             List<string> shasha = new List<string>();
             List<string> md5md5 = new List<string>();
+            List<string> sha256sha256 = new List<string>();
 
-            
+
 
             foreach (string plik in listaPlikow)
             {
-                //byte[] bytes = Encoding.ASCII.GetBytes(plik);
 
                 //sha1
                 using (FileStream fop = System.IO.File.OpenRead(plik))
@@ -95,16 +100,26 @@ namespace PaGit.Controllers
                         var hash = md5.ComputeHash(stream);
                         md5md5.Add(BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
                     }
-                  
-                    
                 }
+
+                //sha256
+                using (FileStream filestream = System.IO.File.OpenRead(plik))
+                {
+                    SHA256 mySHA256 = SHA256Managed.Create();
+
+
+                    //filestream.Position = 0;
+
+                    byte[] hashValue = mySHA256.ComputeHash(filestream);
+
+                    sha256sha256.Add(BitConverter.ToString(hashValue).Replace("-", "").ToLowerInvariant());
+
+                }
+
+
             }
 
-            //ViewBag.md5md5 = "MD5: " + md5md5.ToString();
-            //ViewBag.shasha = "SHA-1: " + shasha.ToString();
-
-
-
+           
 
             //rozpoznawanie 
             BinaryReader reader = new BinaryReader(new FileStream(Convert.ToString(listaPlikow.Last()), FileMode.Open, FileAccess.Read, FileShare.None));
@@ -152,7 +167,7 @@ namespace PaGit.Controllers
                     break;
 
                 case "FF-D8-FF-E0":
-                        output = " => jpg";
+                    output = " => jpg";
                     break;
 
 
@@ -192,7 +207,7 @@ namespace PaGit.Controllers
                 case "50-4B-03-04":
                     output = " => zip";
                     break;
-                  
+
 
                 case "7F-45-4C-46":
                     output = " => elf";
@@ -204,21 +219,21 @@ namespace PaGit.Controllers
                     output = " => 7z";
                     break;
 
-                  
 
 
 
-                   case var someVal when new Regex(@"52-61-72-21-1A-07-00.*").IsMatch(someVal):
 
-                    output = " => rar";
-                    break;
+                //case var someVal when new Regex(@"52-61-72-21-1A-07-00.*").IsMatch(someVal):
 
-                   
+                // output = " => rar";
+                // break;
 
-                   case var someVal when new Regex(@"52-61-72-21-1A-07-01-00.*").IsMatch(someVal):
 
-                    output = " => rar";
-                    break;
+
+                //case var someVal when new Regex(@"52-61-72-21-1A-07-01-00.*").IsMatch(someVal):
+
+                // output = " => rar";
+                // break;
 
 
 
@@ -234,7 +249,15 @@ namespace PaGit.Controllers
 
                 case var someVal when new Regex(@"4D-5A.*").IsMatch(someVal):
 
-                    output = " => exe";
+                    //output = " => exe";
+                    var versionInfo = FileVersionInfo.GetVersionInfo(pliki[0]);
+                    string versionProduct = versionInfo.ProductVersion;
+                    string versionFile = versionInfo.CompanyName;
+                    string versionBuild = versionInfo.FileBuildPart.ToString();
+
+                    ViewBag.wersja = "Wersja produktu (exe ):" + versionProduct + "Wersja budujaca: " + versionBuild;
+                    ViewBag.wersja2 = "Company name (exe) " + versionFile;
+                    output = " => EXE";
                     break;
 
                 case "null":
@@ -243,11 +266,11 @@ namespace PaGit.Controllers
 
                     break;
 
-                
+
 
             }
 
-          
+
 
             if (output != String.Empty)
             {
@@ -262,22 +285,26 @@ namespace PaGit.Controllers
 
 
 
-            foreach (FileInfo file in dir.GetFiles())
+            foreach (FileInfo file in dir.EnumerateFiles())
             {
                 file.Delete();
             }
 
-            //foreach (FileInfo file in di.EnumerateFiles())
-            //{
-            //    file.Delete();
+
+            //List<string> dllList = new List<string>();
+            //foreach (var dll in Directory.EnumerateFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.dll", SearchOption.TopDirectoryOnly)){
+            //    //dll.Add(Directory.EnumerateFiles(@"C:\Users\User\source\repos\PaGit\PaGit\upload", "*.dll", SearchOption.TopDirectoryOnly));
+            //    dllList.Add(dll);
             //}
+            //ViewBag.dldl = "cos : " + dllList; 
 
+            return View(shasha);
 
-            return View(md5md5);
         }
-    
-
 
 
     }
-}
+
+
+    }
+
