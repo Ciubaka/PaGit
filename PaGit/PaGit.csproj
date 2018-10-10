@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapplo.Windows.Shell32" Version="0.6.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="PeNet" Version="0.7.0" />
+    <PackageReference Include="WindowsAPICodePack-Core" Version="1.1.2" />
+    <PackageReference Include="WindowsAPICodePack-ExtendedLinguisticServices" Version="1.1.1" />
+    <PackageReference Include="WindowsAPICodePack-Sensors" Version="1.1.1" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+    <PackageReference Include="WindowsAPICodePack-ShellExtensions" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
