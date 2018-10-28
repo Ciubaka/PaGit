@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Dapplo.Windows.Shell32" Version="0.6.6" />
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="PeNet" Version="0.7.1" />
     <PackageReference Include="WindowsAPICodePack-Core" Version="1.1.2" />
     <PackageReference Include="WindowsAPICodePack-ExtendedLinguisticServices" Version="1.1.1" />

@@ -34,19 +34,13 @@ namespace PaGit.Controllers
 
         public IActionResult Pliky()
         {
-            //pobranie dodanych plików z folderu  
+            //sciezka do pobranych plikow
             var dirPath = Path.Combine(Directory.GetCurrentDirectory(), "upload");
-           
-           // string dirPath = @"C:\Users\User\source\repos\PaGit\PaGit\upload";
-
-
-            //string[] plikiWszystkie = Directory.GetFiles(dirPath, "*.*");
 
             //info o folderze
             var dirInfo = new DirectoryInfo(dirPath);
             FileInfo[] files = dirInfo.GetFiles();
-           
-            //List<string> listaPlikow = plikiWszystkie.ToList();
+
             List<string> listaPlikow = Directory.EnumerateFiles(dirPath, "*.*").ToList();
 
 
@@ -56,10 +50,6 @@ namespace PaGit.Controllers
             List<string> datyOstatniegoDostepu = new List<string>();
             List<string> atrybuty = new List<string>();
 
-            //List<string> datyStworzeniaPliku = new List<string>();
-            //List<string> datyOstatniejModyfikacji = new List<string>();
-
-            
 
             foreach (FileInfo file in files)
             {
@@ -70,36 +60,31 @@ namespace PaGit.Controllers
                 datyOstatniegoDostepu.Add(file.LastAccessTime.ToShortDateString());
                 atrybuty.Add(file.Attributes.ToString());
 
-                //datyStworzeniaPliku.Add(file.CreationTime.ToShortDateString());
-                //datyOstatniejModyfikacji.Add(file.LastAccessTime.ToShortDateString());
-
-
-                //DateTime creation = System.IO.File.GetCreationTime(pliki[0]);
-                //DateTime modification = System.IO.File.GetLastWriteTime(@"C:\Users\User\Desktop\JakubOperacz.docx");
-                //DateTime dostep = System.IO.File.GetLastAccessTime(@"C:\Users\User\Desktop\JakubOperacz.docx");
-
             }
-
-            //ViewBag.nazwa = "Nazwa pliku: " + nazwy.First();
-            //ViewBag.rozszerzenia = "Rozszerzenie: " + rozszerzenia.First();
-            //ViewBag.rozmiary = "Rozmiar w bajtach: " + rozmiary.First();
-
-            //ViewBag.datyOstatniegoDostepu = "Data ostatniego dotępu: " + datyOstatniegoDostepu.First();
-            //ViewBag.datyStworzeniaPliku = "Data stworzenia pliku: " + datyStworzeniaPliku.First();
-            //ViewBag.datyOstatniejModyfikacji = "Data ostatniej modyfikacji: " + datyOstatniejModyfikacji.First();
-
-
 
 
             List<string> shasha = new List<string>();
             List<string> md5md5 = new List<string>();
             List<string> sha256sha256 = new List<string>();
 
-
-            List<string> pierwszeWHexa = new List<string>();
             List<string> magicBytes = new List<string>();
-        
 
+            List<string> OriginalFilename = new List<string>();
+            List<string> InternalFilename = new List<string>();
+            List<string> Language = new List<string>();
+            List<string> CompanyName = new List<string>();
+            List<string> FileVersion = new List<string>();
+            List<string> versionsProduct = new List<string>();
+            List<string> versionBuild = new List<string>();
+            List<string> importLib = new List<string>();
+            List<DateTime> timeStamp = new List<DateTime>();
+            List<string> imphash = new List<string>();
+
+            
+
+
+            string output_penet = null;
+            string inne = null;
 
 
 
@@ -136,58 +121,37 @@ namespace PaGit.Controllers
                 }
 
 
-
-
-
-
-
                 //rozpoznawanie 
                 using (BinaryReader reader = new BinaryReader(
                     new FileStream(Convert.ToString(plik), FileMode.Open, FileAccess.Read, FileShare.None)))
                 {
-
-                    reader.BaseStream.Position = 0x0; 
-
-                    byte[] data = reader.ReadBytes(0x04); 
-
+                    reader.BaseStream.Position = 0x0;
+                    byte[] data = reader.ReadBytes(0x04);
                     string data_as_hex = BitConverter.ToString(data);
-
                     string my = data_as_hex.Substring(0, 11);
-
                     string output = null;
-                
-
                     switch (my)
-
                     {
 
                         case "38-42-50-53":
-
                             output = " => psd";
-
                             break;
 
                         case "25-50-44-46":
                             output = " => pdf";
-
                             break;
 
                         case "49-49-2A-00":
-
                             output = " => tif";
-
                             break;
 
                         case "4D-4D-00-2A":
-
                             output = " => tif";
-
                             break;
 
                         case "FF-D8-FF-E0":
                             output = " => jpg";
                             break;
-
 
                         case "47-49-46-38":
                             output = " => gif";
@@ -197,22 +161,17 @@ namespace PaGit.Controllers
                             output = " => gks";
                             break;
 
-
                         case "49-49-4E-31":
                             output = " => nif";
                             break;
-
 
                         case "56-49-45-57":
                             output = " => pm";
                             break;
 
-
-
                         case "89-50-4E-47":
                             output = " => png";
                             break;
-
 
                         case "59-A6-6A-95":
                             output = " => ras";
@@ -226,27 +185,23 @@ namespace PaGit.Controllers
                             output = " => zip";
                             break;
 
-
                         case "7F-45-4C-46":
                             output = " => elf";
                             break;
 
-
-
                         case var someVal when new Regex(@"42-4D.*").IsMatch(someVal):
-
                             output = " => bmp";
                             break;
 
                         case var someVal when new Regex(@"4D-5A.*").IsMatch(someVal):
 
-                            var versionInfo = FileVersionInfo.GetVersionInfo(plik); //dodaaaC!
-                            string OriginalFilename = versionInfo.OriginalFilename;
-                            string Language = versionInfo.Language;
-                            string CompanyName = versionInfo.CompanyName;
-                            string FileVersion = versionInfo.FileVersion;
-                            string versionProduct = versionInfo.ProductVersion;
-                            string versionBuild = versionInfo.FileBuildPart.ToString();
+                            //var versionInfo = FileVersionInfo.GetVersionInfo(plik); //dodaaaC!
+                            //OriginalFilename.Add( versionInfo.OriginalFilename);
+                            //Language.Add(versionInfo.Language);
+                            //CompanyName.Add(versionInfo.CompanyName);
+                            //FileVersion.Add(versionInfo.FileVersion);
+                            //versionProduct.Add(versionInfo.ProductVersion);
+                            //versionBuild.Add(versionInfo.FileBuildPart.ToString());
                             //string CompanyName = versionInfo;
 
 
@@ -258,13 +213,13 @@ namespace PaGit.Controllers
 
 
                             //}
-
-
-
-                            reader.BaseStream.Position = 0x3C;
-                            byte[] datas = reader.ReadBytes(0x04);
-                            //string data_as_hexa = BitConverter.ToString(datas);
                    
+
+
+
+                                reader.BaseStream.Position = 0x3C;
+                            byte[] datas = reader.ReadBytes(0x04);
+
                             int i = BitConverter.ToInt32(datas, 0);
                             reader.BaseStream.Position = i;
                             byte[] myyyczek = reader.ReadBytes(0x04);
@@ -274,15 +229,15 @@ namespace PaGit.Controllers
                             switch (wzor)
                             {
                                 case "50-45-00-00":
-                                    output = " => EXE(PE32)";
+                                    output = "EXE => PE32";
                                     break;
                                 default:
-                                    output = " => EXE(DOS)";
+                                    output =  "EXE => DOS";
                                     break;
                             }
 
 
-       
+
                             break;
 
                         case "null":
@@ -299,60 +254,147 @@ namespace PaGit.Controllers
 
                     if (output != String.Empty)
                     {
-                        pierwszeWHexa.Add(data_as_hex);
-                        ViewBag.Message = "Plik w hexa: " + data_as_hex;
-                        //ViewBag.Messaga = "Plik w hexa3D: " + data_as_hexa;
                         magicBytes.Add(output);
                         ViewBag.out_put = "Typ pliku to: " + output;
                     }
                     else
                     {
                         ViewBag.out_put = "Dodaj plik z orginalnym rozszerzeniem!";
-                        //!! tu cos z lista
+
                     }
 
                 }
 
+
                 //importowane biblioteki
-                var peFile = new PeFile(plik);
-                foreach (var dll in peFile.ImportedFunctions.Select(funkcja => funkcja.DLL).Distinct())
+
+
+                PeFile p = null;
+
+                try
                 {
-                    // tutaj wyświetl `dll'
-                    ViewBag.dlll = dll;
+                    p = new PeFile(plik);
+                if(p.IsEXE)
+                {
+                        output_penet = "isExe, ";
+                        //czas z timestamp
+
+                        const int peHeaderOffset = 60;
+                        const int linkerTimestampOffset = 8;
+                        var b = new byte[2048];
+                        System.IO.FileStream s = null;
+                        try
+                        {
+                            s = new FileStream(listaPlikow.First(), FileMode.Open, FileAccess.Read);
+                            s.Read(b, 0, 2048);
+                        }
+                        finally
+                        {
+                            if (s != null)
+                                s.Close();
+                        }
+                        var dt = new DateTime(1970, 1, 1, 0, 0, 0).
+                        AddSeconds(BitConverter.ToInt32(b, BitConverter.ToInt32(b, peHeaderOffset) + linkerTimestampOffset));
+                        timeStamp.Add(dt.AddHours(TimeZone.CurrentTimeZone.GetUtcOffset(dt).Hours));
+
+                        if (p.Is64Bit)
+                            {
+                                output_penet += "PE64 ";
+                            }
+                            else if (p.Is32Bit)
+                            {
+                                output_penet += "PE32 ";
+                            }
+                }
+
+                else if(p.IsDLL)
+                {
+                        output_penet += "isDLL ";
+                    }
+                else if (p.IsDriver)
+                {
+                        output_penet += "isDriver ";
+                    }
+                else
+                {
+                        output_penet += "";
+                }
+
+                    foreach (var dll in p.ImportedFunctions.Select(funkcja => funkcja.DLL).Distinct())
+                    {
+                        importLib.Add(dll);
+                    }
+
+                    imphash.Add(p.ImpHash);
+
+
+                    //do oGARNIECIA!!
+                    //var cos = p.ImageSectionHeaders.ToList();
+                    //ViewBag.coss = cos;
+
 
 
                 }
+                catch(Exception e)
+                {
+                    ViewBag.exception = "WYJĄTEK W PENECIE Y+BYKU";
+                }
+                
+
+                var versionInfo = FileVersionInfo.GetVersionInfo(plik); //dodaaaC!
+                OriginalFilename.Add(versionInfo.OriginalFilename);
+                InternalFilename.Add(versionInfo.InternalName);
+                Language.Add(versionInfo.Language);
+                CompanyName.Add(versionInfo.CompanyName);
+                FileVersion.Add(versionInfo.FileVersion);
+                versionsProduct.Add(versionInfo.ProductVersion);
+                versionBuild.Add(versionInfo.FileBuildPart.ToString());
             }
 
 
             //czas z timestamp
 
+            //const int peHeaderOffset = 60;
+
+
+            ViewBag.outputcik = output_penet;
+            ViewBag.inne = inne;
            
-                const int peHeaderOffset = 60;
-                const int linkerTimestampOffset = 8;
-                var b = new byte[2048];
-                System.IO.FileStream s = null;
-                try
-                {
-                    s= new FileStream(listaPlikow.First(), FileMode.Open, FileAccess.Read);
-                    s.Read(b, 0, 2048);
-                }
-                finally
-                {
-                    if (s != null)
-                        s.Close();
-                }
-                var dt = new DateTime(1970, 1, 1, 0, 0, 0).
-                AddSeconds(BitConverter.ToInt32(b, BitConverter.ToInt32(b, peHeaderOffset) + linkerTimestampOffset));
-                DateTime myk = dt.AddHours(TimeZone.CurrentTimeZone.GetUtcOffset(dt).Hours);
-                ViewBag.czas = "Czas " + myk;
 
 
 
+            ViewBag.name = nazwy;
+            ViewBag.extension = rozszerzenia;
+            ViewBag.fileSize = rozmiary;
+            ViewBag.magic = magicBytes;
+            ViewBag.dateOfCompilation = timeStamp;
 
 
+            ViewBag.md5md5 = md5md5;
+            ViewBag.sha256 = sha256sha256;
+            ViewBag.sha1 = shasha;
+            ViewBag.imphash = imphash;
 
-            return View(shasha);
+
+            ViewBag.data = importLib;
+
+            ViewBag.lastAccess = datyOstatniegoDostepu;
+            ViewBag.attributes = atrybuty;
+            ViewBag.orginalFilename = OriginalFilename;
+            ViewBag.internalFilename = InternalFilename;
+            ViewBag.orginalLanguage = Language;
+            ViewBag.companyName = CompanyName;
+            ViewBag.fileVersion = FileVersion;
+            ViewBag.versionProduct = versionsProduct;
+            ViewBag.versionBuild = versionBuild;
+
+
+            foreach (FileInfo file in dirInfo.EnumerateFiles())
+            {
+                file.Delete();
+            }
+
+            return View();
 
         }
 

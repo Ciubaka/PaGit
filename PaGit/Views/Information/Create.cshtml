@@ -1,0 +1,108 @@
+﻿@model PaGit.Models.Information
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Information</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SHA256" class="control-label"></label>
+                <input asp-for="SHA256" class="form-control" />
+                <span asp-validation-for="SHA256" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SHA1" class="control-label"></label>
+                <input asp-for="SHA1" class="form-control" />
+                <span asp-validation-for="SHA1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MD5" class="control-label"></label>
+                <input asp-for="MD5" class="form-control" />
+                <span asp-validation-for="MD5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nazwa" class="control-label"></label>
+                <input asp-for="Nazwa" class="form-control" />
+                <span asp-validation-for="Nazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rozszerzenie" class="control-label"></label>
+                <input asp-for="Rozszerzenie" class="form-control" />
+                <span asp-validation-for="Rozszerzenie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rozmiar" class="control-label"></label>
+                <input asp-for="Rozmiar" class="form-control" />
+                <span asp-validation-for="Rozmiar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataOstatniegoDostepu" class="control-label"></label>
+                <input asp-for="DataOstatniegoDostepu" class="form-control" />
+                <span asp-validation-for="DataOstatniegoDostepu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Atrybuty" class="control-label"></label>
+                <input asp-for="Atrybuty" class="form-control" />
+                <span asp-validation-for="Atrybuty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Magic" class="control-label"></label>
+                <input asp-for="Magic" class="form-control" />
+                <span asp-validation-for="Magic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrginalnaNazwa" class="control-label"></label>
+                <input asp-for="OrginalnaNazwa" class="form-control" />
+                <span asp-validation-for="OrginalnaNazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Jezyk" class="control-label"></label>
+                <input asp-for="Jezyk" class="form-control" />
+                <span asp-validation-for="Jezyk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileVersion" class="control-label"></label>
+                <input asp-for="FileVersion" class="form-control" />
+                <span asp-validation-for="FileVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VersionProduct" class="control-label"></label>
+                <input asp-for="VersionProduct" class="form-control" />
+                <span asp-validation-for="VersionProduct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImportowaneBiblioteki" class="control-label"></label>
+                <input asp-for="ImportowaneBiblioteki" class="form-control" />
+                <span asp-validation-for="ImportowaneBiblioteki" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

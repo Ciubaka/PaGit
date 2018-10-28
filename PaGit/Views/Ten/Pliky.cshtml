@@ -3,43 +3,173 @@
 *@
 @{
 
-    @model List<string>
-    @foreach (var element in Model)
+    @*@model List<string>
+        @foreach (var element in Model)
+        {
+            <p>@Html.DisplayFor(m => element)</p>
+
+        }*@
+    <div>
+        <font size="70">BASIC PROPERTIRES</font>
+
+        @foreach (var cosik in ViewBag.name)
+        {
+            <ol>
+                <li><b>FileName:</b> @cosik</li>
+            </ol>
+
+        }
+
+        @foreach (var cosik in ViewBag.extension)
+        {
+            <ol>
+                <li><b>FileTypeExtension</b>: @cosik</li>
+            </ol>
+
+        }
+        @foreach (var cosik in ViewBag.fileSize)
+        {
+            <ol>
+                <li><b>FileSize</b>: @cosik B</li>
+            </ol>
+
+        }
+        @foreach (var cosik in ViewBag.dateOfCompilation)
+        {
+            <ol>
+                <li><b>DateOfCompilation</b>: @cosik</li>
+            </ol>
+
+        }
+        @foreach (var cosik in ViewBag.magic)
+        {
+            <ol>
+                <li><b>MagicBytes</b>: @cosik</li>
+            </ol>
+
+        }
+
+    </div>
+
+
+    <div>
+        <font size="32">SKRÓTY SKANOWANEGO PLIKU</font>
+        <p><b>SHA-256:</b></p>
+        @foreach (var cosik in ViewBag.sha256)
+        {
+            <ol>
+                <li>@cosik</li>
+            </ol>
+
+        }
+        <p><b>MD5: </b></p>
+        @foreach (var cosik in ViewBag.md5md5)
+        {
+            <ol>
+                <li>@cosik</li>
+            </ol>
+        }
+
+        <p><b>SHA-1</b></p>
+        @foreach (var cosik in ViewBag.sha1)
+        {
+            <ol>
+                <li>@cosik</li>
+            </ol>
+        }
+        <p><b>Imphash</b></p>
+        @foreach (var cosik in ViewBag.imphash)
+        {
+            <ol><li>Imphash: @cosik</li></ol>
+
+        }
+
+
+    </div>
+
+    <div>
+        <font size="32">PORTABLE EXECUTABLE INFO</font>
+
+        <p>Importowane biblioteki:</p>
+        @foreach (var cosik in ViewBag.data)
+        {
+            <li>@cosik</li>
+
+        }
+
+
+    </div>
+
+    <div>
+        <font size="32">METADANE</font>
+        @foreach (var cosik in ViewBag.lastAccess)
+        {
+            <li>LastAccess : @cosik</li>
+
+        }
+
+        @foreach (var cosik in ViewBag.attributes)
+        {
+            <li>Attributes : @cosik</li>
+
+        }
+
+        @foreach (var cosik in ViewBag.orginalFilename)
+        {
+            <li>OrginalFilename : @cosik</li>
+
+        }
+        @foreach (var cosik in ViewBag.internalFilename)
+        {
+            <li>InternalFilename : @cosik</li>
+
+        }
+
+        @foreach (var cosik in ViewBag.orginalLanguage)
+        {
+            <li>OrginalLanguage : @cosik</li>
+
+        }
+
+        @foreach (var cosik in ViewBag.companyName)
+        {
+            <li>CompanyName : @cosik</li>
+
+        }
+
+        @foreach (var cosik in ViewBag.fileVersion)
+        {
+            <li>FileVersion : @cosik</li>
+
+        }
+        @foreach (var cosik in ViewBag.versionProduct)
+        {
+            <li>ProductVersion : @cosik</li>
+
+        }
+        @foreach (var cosik in ViewBag.versionBuild)
+        {
+            <li>BuildVersion : @cosik</li>
+
+        }
+
+    </div>
+    <br />
+    @ViewBag.exception
+    <br />
+    <br />
+    @ViewBag.outputcik
+    <br />
+    <br />
+    @ViewBag.inne
+    <br />
+    @foreach (var cosik in @ViewBag.coss)
     {
-        <p>MD5: @Html.DisplayFor(m => element)</p>
+        <li>nie : @cosik</li>
 
     }
-    <br />
-    @ViewBag.Message
-    <br />
-    <br />
-    @ViewBag.out_put
-    <br />
 
-    @*<br />
-    @ViewBag.wersja
-    <br />
-    <br />
-    @ViewBag.wersja2
-    <br />*@
-    <br />
-    @ViewBag.wyniki
-    <br />
-    <br />
-    @ViewBag.old
-    <br />
-    <br />
 
-    @ViewBag.title
-    <br />
-    <br />
-    @ViewBag.coos
-    <br />
-    <br />
-    @ViewBag.czas
-    <br />
-   <br />
-   @ViewBag.dlll
-    <br />
 
 }
+
